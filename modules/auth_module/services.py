@@ -17,8 +17,8 @@ def construct_auth_uri():
 
 
 def validate_token(token):
-    decrypted = fernet.decrypt(token).decode()  # Decrypt token grabbed earlier from URI query parameters
     try:
+        decrypted = fernet.decrypt(token.encode()).decode()  # Decrypt token grabbed earlier from URI query parameters
         response = requests.get(os.environ['api_url'] + "/oauth/token/info",
                                 headers={'Authorization': 'Bearer ' + decrypted})   # Get info about token
     except Exception as err:
