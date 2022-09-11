@@ -13,7 +13,7 @@ states = set()
 def construct_auth_uri():
     state = uuid.uuid4().hex
     states.add(state)
-    return os.environ['back_redirect_uri'] + "&state=" + state
+    return os.environ['api_redirect_uri'] + "&state=" + state
 
 
 def validate_token(token):
