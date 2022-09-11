@@ -6,6 +6,7 @@ from modules.auth_module import auth
 
 app = Flask(__name__)
 
+# Import all routes blueprint from modules
 app.register_blueprint(events)
 app.register_blueprint(users)
 app.register_blueprint(auth)
