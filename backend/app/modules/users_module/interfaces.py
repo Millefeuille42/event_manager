@@ -3,7 +3,6 @@ class UserData:
         self.data = {
             'login': data['login'],
             'email': data['email'],
-            'location': data['location'],
             'url': data['url'],
             'image_url': data['image_url'],
         }
