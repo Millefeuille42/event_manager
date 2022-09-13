@@ -1,15 +1,8 @@
 import MainBox from "../styledComponents/MainBox";
-import {Box, Grid, Paper, styled} from "@mui/material";
+import {Box, Paper} from "@mui/material";
 import EventCard from "./EventGridAddons/EventCard";
-
-export interface event {
-	title: string
-	day: string,
-	month: string,
-	description: string,
-	kind: string,
-	location: string
-}
+import {eventParsed, eventData} from "../queriesData";
+import {useEffect} from "react";
 
 const paperStyle = {
 	width: '100%',
@@ -31,42 +24,52 @@ const listStyle = {
 	overflowY: 'scroll'
 }
 
-const boxStyle = {
-	pt: 0,
-	height: "68%",
-	width: '95%',
+interface props {
+	exam: boolean
+	sub: boolean
+	filter: string | null
+	events: eventData[]
 }
 
-const EventGrid = () => {
-	let events: event[] = []
-	for (let i = 0; i < 32; i++) {
-		events.push({
-			title: "My event",
-			day: i.toString(),
-			month: "sept",
-			description: "Oui alors écoute moi, là on voit qu'on a beaucoup à travailler sur nous-mêmes car entre " +
-				"penser et dire, il y a un monde de différence et parfois c'est bon parfois c'est pas bon. " +
-				"Il y a un an, je t'aurais parlé de mes muscles." +
-				"Je ne voudrais pas rentrer dans des choses trop dimensionnelles, " +
-				"mais, si vraiment tu veux te rappeler des souvenirs de ton perroquet, entre penser et dire, il y a " +
-				"un monde de différence et ça, c'est très dur, et, et, et... c'est très facile en même temps. " +
-				"Tu vas te dire : J'aurais jamais cru que le karaté guy pouvait parler comme ça ! ",
-			kind: "Generic",
-			location: "kekpart"
-		})
+const EventGrid = (props:props) => {
+
+	const getFilteredList = () => {
+		let eventList = props.events
+
+		if (props.sub && props.filter !== null) {
+			eventList = props.events.filter((event: eventData) => {
+				return new Date(event.begin_at) > new Date()
+			})
+		}
+		return eventList
 	}
 
+	let nl = getFilteredList()
+
 	return (
-		<MainBox sx={boxStyle}>
-			<Paper sx={paperStyle}>
-				<Box sx={listStyle}>
-					{events.map((event: event) => {
-						return (
-							<EventCard event={event}/>
-						)
-					})}
-				</Box>
-			</Paper>
+		<MainBox sx={{
+				height: props.exam ? "68%" : '90%',
+				width: '95%',
+			}}
+		>
+			{nl.length > 0 && (
+				<Paper sx={paperStyle}>
+					<Box sx={listStyle}>
+						{
+							nl.map((event: eventData, index: number) => {
+								const date = new Date(event.begin_at)
+								const day = date.getDate().toString()
+								const month = date.toLocaleString('default', {month: 'long'})
+								let newEvent: eventParsed = {...event, day: day, month: month}
+								return (
+									<EventCard
+										key={index}
+										event={newEvent}/>
+								)
+							})}
+					</Box>
+				</Paper>
+			)}
 		</MainBox>
 	)
 }

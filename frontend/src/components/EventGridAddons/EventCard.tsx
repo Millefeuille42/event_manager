@@ -1,5 +1,5 @@
 import {Box, Card, CardContent, Typography} from "@mui/material";
-import {event} from "../EventGrid"
+import {eventParsed} from "../../queriesData";
 
 const cardStyle = {
 	display: 'flex',
@@ -13,23 +13,23 @@ const cardStyle = {
 }
 
 interface props {
-	event: event
+	event: eventParsed
 }
 
 const EventCard = (props:props) => {
 	return (
 		<Card sx={cardStyle} elevation={6}>
-			<Box sx={{ display: 'flex', flexDirection: 'column' }}>
-				<CardContent sx={{ flex: '1 0 auto' }}>
-					<Typography component='div' variant='h5'>
-						{props.event.title}
+			<Box sx={{ width: '70%', display: 'flex', flexDirection: 'column' }}>
+				<CardContent sx={{ width: '100%'}}>
+					<Typography width={'100%'} component='div' noWrap variant='body1'>
+						{props.event.name}
 					</Typography>
-					<Typography component='div' variant='subtitle1' color="text.secondary">
+					<Typography width={'100%'} noWrap component='div' variant='subtitle1' color="text.secondary">
 						{props.event.kind}
 					</Typography>
 				</CardContent>
 				<Box sx={{display: 'flex', alignItems: 'center', pl: 2, pb: 1}}>
-					<Typography component='div' variant='overline'>
+					<Typography width={'100%'} noWrap component='div' variant='overline'>
 						{props.event.location}
 					</Typography>
 				</Box>

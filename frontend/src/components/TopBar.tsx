@@ -3,9 +3,11 @@
 import {AppBar, Box, Toolbar, Typography} from "@mui/material";
 import TopBarSearch from "./TopBarAddons/TopBarSearch";
 import TopBarAccountMenu from "./TopBarAddons/TopBarAccountMenu";
+import {userData} from "../queriesData";
 
 interface props {
 	loggedIn: boolean
+	user: userData | null
 }
 
 const TopBar = (props:props) => {
@@ -21,6 +23,17 @@ const TopBar = (props:props) => {
 					>
 						Event Manager
 					</Typography>
+
+					{props.user !== null && (
+											<Typography
+						variant={"button"}
+						noWrap
+						component={"div"}
+						sx={{ flexGrow: 1, display: {xs: 'none', sm: 'block'} }}
+					>
+						{props.user.login}
+					</Typography>
+					)}
 					<TopBarSearch/>
 					{props.loggedIn ? <TopBarAccountMenu/> : <template></template>}
 				</Toolbar>

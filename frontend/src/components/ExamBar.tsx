@@ -9,16 +9,6 @@ const boxStyle = {
 	height: "30%",
 }
 
-const titleStyle = {
-	display: 'flex',
-	justifyContent: 'center',
-	alignItems: 'center',
-	width: "25%",
-	minWidth: "200px",
-	height: '50px',
-	mb: 2
-}
-
 const paperStyle = {
 	width: '100%',
 	display: 'flex',
@@ -37,15 +27,12 @@ const ExamBar = () => {
 		exams.push({day: i.toString(), month: "sept"})
 	}
 
-	return(
+	return (
 		<Box sx={boxStyle}>
-			<Paper sx={titleStyle}>
-				Subscribed exams
-			</Paper>
 			<Paper sx={paperStyle} elevation={2}>
 				{exams.map((exam: exam) => {
 					return (
-						<ExamCard day={exam.day} month={exam.month}/>
+						<ExamCard key={exam.day} day={exam.day} month={exam.month}/>
 					)
 				})}
 			</Paper>

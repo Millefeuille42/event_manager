@@ -5,6 +5,7 @@ import {Box, createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {getAuthToken, getUser} from "./queries";
 import MainContent from "./components/MainContent";
 import MainBox from "./styledComponents/MainBox";
+import {userData} from "./queriesData";
 
 const darkTheme = createTheme({
 	palette: {
@@ -15,6 +16,8 @@ const darkTheme = createTheme({
 
 function App() {
 	const [connected, setConnected] = useState(false)
+	const [user, setUser] = useState<userData | null>(null)
+
 	const checkQueryForAuth = () => {
 		const params = (new URL(window.location.toString())).searchParams
 		if (params.has("code") && params.has("state")) {
@@ -25,10 +28,22 @@ function App() {
 				window.history.pushState('', '', "/")
 				setConnected(true)
 				window.sessionStorage.setItem("Session", rToken)
+				getUserData()
 			}).catch((e) => {
 				console.log(e)
 			})
 		}
+	}
+
+	const getUserData = () => {
+		let token = window.sessionStorage.getItem("Session")
+		if (token === null)
+			return
+		getUser('me', token).then((user: userData) => {
+			setUser(user)
+		}).catch((e) => {
+			console.log(e)
+		})
 	}
 
 	useEffect( () => {
@@ -39,14 +54,16 @@ function App() {
 			return
 		}
 		setConnected(true)
-	})
+		if (user === null)
+			getUserData()
+	}, [])
 
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
-			<TopBar loggedIn={connected}/>
+			<TopBar loggedIn={connected} user={user}/>
 			<MainBox sx={{height: '87vh'}}>
-				<MainContent loggedIn={connected}/>
+				<MainContent user={user} loggedIn={connected}/>
 			</MainBox>
 		</ThemeProvider>
 	);
