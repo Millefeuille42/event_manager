@@ -6,4 +6,5 @@ class EventData:
             'description': data['description'],
             'begin_at': data['begin_at'],
             'location': data['location'],
+            "kind": data['kind']
         }
