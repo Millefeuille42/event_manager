@@ -1,16 +1,18 @@
 // Created by millefeuille on 11-Sep-22
 
 import {AppBar, Box, Toolbar, Typography} from "@mui/material";
-import TopBarBurgerMenu from "./TopBarAddons/TopBarBurgerMenu";
 import TopBarSearch from "./TopBarAddons/TopBarSearch";
 import TopBarAccountMenu from "./TopBarAddons/TopBarAccountMenu";
 
-const TopBar = () => {
+interface props {
+	loggedIn: boolean
+}
+
+const TopBar = (props:props) => {
 	return (
 		<Box sx={{ flexGrow: 1 }}>
 			<AppBar position="static" >
 				<Toolbar>
-					<TopBarBurgerMenu/>
 					<Typography
 						variant={"h6"}
 						noWrap
@@ -20,7 +22,7 @@ const TopBar = () => {
 						Event Manager
 					</Typography>
 					<TopBarSearch/>
-					<TopBarAccountMenu/>
+					{props.loggedIn ? <TopBarAccountMenu/> : <template></template>}
 				</Toolbar>
 			</AppBar>
 		</Box>

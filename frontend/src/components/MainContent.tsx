@@ -1,5 +1,7 @@
 import AuthPage from "./AuthPage";
-import UserPage from "./UserPage";
+import MainBox from "../styledComponents/MainBox";
+import ExamBar from "./ExamBar";
+import EventGrid from "./EventGrid";
 
 interface props {
 	loggedIn: boolean
@@ -7,13 +9,16 @@ interface props {
 
 const MainContent = (props: props) => {
 	return (
-		<div>
+		<MainBox sx={{pt: 2, height: "100%"}}>
 			{ props.loggedIn ? (
-				<UserPage/>
+				<MainBox sx={{flexDirection: 'column', justifyContent: "flex-start",  alignItems: 'center', height: "100%"}}>
+					<ExamBar/>
+					<EventGrid/>
+				</MainBox>
 			) : (
 				<AuthPage/>
 			)}
-		</div>
+		</MainBox>
 	)
 }
 

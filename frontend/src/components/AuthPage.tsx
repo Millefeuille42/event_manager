@@ -1,6 +1,13 @@
 import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
 import {getAuthLink} from "../queries";
 
+const cardStyle = {
+	height: "150px",
+	minWidth: 350,
+	width: '40%',
+	marginTop: 4
+}
+
 const AuthPage = () => {
 	const handleClick = async () => {
 		await getAuthLink().then((link: string) => {
@@ -11,7 +18,7 @@ const AuthPage = () => {
 	}
 
 	return (
-		<Card sx={{ minWidth: 350, width: '40%', marginTop: 12 }}>
+		<Card sx={cardStyle}>
 			<CardContent>
 				<Typography variant="h5" component="div">
 					Restricted Access

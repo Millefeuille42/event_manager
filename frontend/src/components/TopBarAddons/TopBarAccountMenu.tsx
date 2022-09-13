@@ -1,18 +1,23 @@
 // Created by millefeuille on 11-Sep-22
 
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from '@mui/icons-material/Logout';
 import {IconButton} from "@mui/material";
 
 const TopBarAccountMenu = () => {
+	const handleDisconnect = () => {
+		window.sessionStorage.clear()
+		window.location.reload()
+	}
+
 	return (
 		<IconButton
+			onClick={handleDisconnect}
 			size="large"
 			edge={"start"}
 			color={"inherit"}
-			aria-label={"open drawer"}
 			sx={{ ml: 2 }}
 		>
-			<AccountCircleIcon/>
+			<LogoutIcon/>
 		</IconButton>
 	)
 }

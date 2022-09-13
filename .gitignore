@@ -1,4 +1,5 @@
 .idea
 ven
+venv
 .env
 node_modules

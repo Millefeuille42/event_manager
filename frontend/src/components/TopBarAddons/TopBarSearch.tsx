@@ -1,7 +1,9 @@
 // Created by millefeuille on 11-Sep-22
 
 import SearchIcon from '@mui/icons-material/Search';
-import {Search, SearchIconWrapper, StyledInputBase} from "../../styles/TopBarSearch";
+import {SearchIconWrapper} from "../../styledComponents/TopBarSearch/SearchIconWrapper";
+import {StyledInputBase} from "../../styledComponents/TopBarSearch/StyledInputBase";
+import {Search} from "../../styledComponents/TopBarSearch/Search";
 
 const TopBarSearch = () => {
 	return(

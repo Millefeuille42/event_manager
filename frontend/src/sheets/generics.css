@@ -1,0 +1,48 @@
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.justify-start {
+    justify-content: flex-start;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-space-between {
+    justify-content: space-around;
+}
+
+.justify-space-around {
+    justify-content: space-between;
+}
+
+.fill-width {
+    border: 1px solid white;
+    width: 100%;
+}
+
+.fill-height {
+    height: 100%;
+}
