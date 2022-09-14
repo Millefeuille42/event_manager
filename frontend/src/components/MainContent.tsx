@@ -17,6 +17,7 @@ const MainContent = (props: props) => {
 	const [showSub, setShowSub] = useState(false)
 	const [filter, setFilter] = useState<string | null>(null)
 	const [events, setEvents] = useState([] as eventData[])
+	const [loaded, setLoaded] = useState(false)
 
 	const onChange = (exam: boolean, newFilter: string | null, sub: boolean) => {
 		if (exam != showExam)
@@ -26,6 +27,7 @@ const MainContent = (props: props) => {
 		if (sub != showSub) {
 			setEvents([])
 			setShowSub(sub)
+			setLoaded(false)
 		}
 	}
 
@@ -35,6 +37,7 @@ const MainContent = (props: props) => {
 			return
 		getAllEvents(props.user.campus, token).then((events: eventData[]) => {
 			setEvents(events.reverse())
+			setLoaded(true)
 		}).catch((e) => {
 			console.log(e)
 		})
@@ -46,6 +49,7 @@ const MainContent = (props: props) => {
 			return
 		getSubEvents(props.user.login, token).then((events: eventData[]) => {
 			setEvents(events.reverse())
+			setLoaded(true)
 		}).catch((e) => {
 			console.log(e)
 		})
@@ -69,7 +73,7 @@ const MainContent = (props: props) => {
 					{showExam && (
 						<ExamBar/>
 					)}
-					<EventGrid events={events} filter={filter} exam={showExam} sub={showSub} />
+					<EventGrid loaded={loaded} events={events} filter={filter} exam={showExam} sub={showSub} />
 				</MainBox>
 			) : (
 				<AuthPage/>

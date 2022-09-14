@@ -1,8 +1,8 @@
 import MainBox from "../styledComponents/MainBox";
-import {Box, Paper} from "@mui/material";
+import {Box, CircularProgress, Paper, Typography} from "@mui/material";
 import EventCard from "./EventGridAddons/EventCard";
 import {eventParsed, eventData} from "../queriesData";
-import {useEffect} from "react";
+import {useState} from "react";
 
 const paperStyle = {
 	width: '100%',
@@ -24,27 +24,74 @@ const listStyle = {
 	overflowY: 'scroll'
 }
 
+
+
+
+
+interface spawnerProps {
+	list: eventData[]
+}
+
+const EventSpawner = (props:spawnerProps) => {
+	return (
+		<Paper sx={paperStyle}>
+			{props.list.length > 0 ? (
+				<Box sx={listStyle}>
+		 			{
+		 				props.list.map((event: eventData, index: number) => {
+		 					const date = new Date(event.begin_at)
+		 					const day = date.getDate().toString()
+		 					const month = date.toLocaleString('default', {month: 'long'})
+		 					let newEvent: eventParsed = {...event, day: day, month: month}
+		 					return (
+		 						<EventCard
+		 							key={index}
+		 							event={newEvent}/>
+		 					)
+		 				})
+		 			}
+		 		</Box>
+			) : (
+				<Typography component={"div"} variant={"h3"}>No events to display
+				</Typography>
+			)}
+		</Paper>
+	)
+}
+
 interface props {
 	exam: boolean
 	sub: boolean
 	filter: string | null
-	events: eventData[]
+	events: eventData[] | null
+	loaded: boolean
 }
 
 const EventGrid = (props:props) => {
-
 	const getFilteredList = () => {
-		let eventList = props.events
+		if (props.events === null)
+			return []
+		let eventList: eventData[] = props.events
+		eventList = props.events.filter((event: eventData) => {
+			return new Date(event.begin_at) >= new Date()
+		})
 
-		if (props.sub && props.filter !== null) {
-			eventList = props.events.filter((event: eventData) => {
+		if (props.sub && props.filter === "now") {
+			eventList = eventList.filter((event: eventData) => {
+				return new Date(event.begin_at).getDate() === new Date().getDate()
+			})
+		}
+		if (props.sub && props.filter === "later") {
+			eventList = eventList.filter((event: eventData) => {
 				return new Date(event.begin_at) > new Date()
 			})
 		}
 		return eventList
 	}
 
-	let nl = getFilteredList()
+	let nl: eventData[] = []
+	if (props.events !== null)
+		 nl = getFilteredList()
 
 	return (
 		<MainBox sx={{
@@ -52,22 +99,11 @@ const EventGrid = (props:props) => {
 				width: '95%',
 			}}
 		>
-			{nl.length > 0 && (
+			{props.loaded ? (
+				<EventSpawner list={nl}/>
+			) : (
 				<Paper sx={paperStyle}>
-					<Box sx={listStyle}>
-						{
-							nl.map((event: eventData, index: number) => {
-								const date = new Date(event.begin_at)
-								const day = date.getDate().toString()
-								const month = date.toLocaleString('default', {month: 'long'})
-								let newEvent: eventParsed = {...event, day: day, month: month}
-								return (
-									<EventCard
-										key={index}
-										event={newEvent}/>
-								)
-							})}
-					</Box>
+					<CircularProgress size={64} />
 				</Paper>
 			)}
 		</MainBox>
