@@ -34,8 +34,8 @@ const TopBar = (props:props) => {
 						{props.user.login}
 					</Typography>
 					)}
-					<TopBarSearch/>
-					{props.loggedIn ? <TopBarAccountMenu/> : <template></template>}
+					{props.loggedIn && <TopBarSearch/> }
+					{props.loggedIn && <TopBarAccountMenu/> }
 				</Toolbar>
 			</AppBar>
 		</Box>
