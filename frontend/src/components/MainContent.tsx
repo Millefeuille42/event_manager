@@ -65,6 +65,11 @@ const MainContent = (props: props) => {
 		}
 	})
 
+	useEffect(() => {
+		setEvents([])
+		setLoaded(false)
+	}, [props.user])
+
 	return (
 		<MainBox sx={{pt: 2, height: "100%"}}>
 			{ props.loggedIn ? (

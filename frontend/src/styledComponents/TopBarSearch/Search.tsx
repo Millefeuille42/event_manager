@@ -1,6 +1,6 @@
 import {alpha, styled} from "@mui/material";
 
-export const Search = styled('div')(({ theme }) => ({
+export const Search = styled('form')(({ theme }) => ({
 	position: 'relative',
 	borderRadius: theme.shape.borderRadius,
 	backgroundColor: alpha(theme.palette.common.white, 0.15),

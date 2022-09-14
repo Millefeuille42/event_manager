@@ -8,6 +8,7 @@ import {userData} from "../queriesData";
 interface props {
 	loggedIn: boolean
 	user: userData | null
+	manageSearch: Function
 }
 
 const TopBar = (props:props) => {
@@ -34,7 +35,7 @@ const TopBar = (props:props) => {
 						{props.user.login}
 					</Typography>
 					)}
-					{props.loggedIn && <TopBarSearch/> }
+					{props.loggedIn && <TopBarSearch manageSearch={props.manageSearch}/> }
 					{props.loggedIn && <TopBarAccountMenu/> }
 				</Toolbar>
 			</AppBar>

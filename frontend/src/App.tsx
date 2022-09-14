@@ -46,6 +46,23 @@ function App() {
 		})
 	}
 
+	const handleSearchUser = async (data: userData, cancel: boolean) => {
+		console.log(cancel)
+		if (cancel) {
+			let token = window.sessionStorage.getItem("Session")
+			if (token === null)
+				return
+			getUser('me', token).then((user: userData) => {
+				console.log("gett")
+				setUser(user)
+			}).catch((e) => {
+				console.log(e)
+			})
+			return
+		}
+		setUser(data)
+	}
+
 	useEffect( () => {
 		let token = window.sessionStorage.getItem("Session")
 		if (!token) {
@@ -61,7 +78,7 @@ function App() {
 	return (
 		<ThemeProvider theme={darkTheme}>
 			<CssBaseline />
-			<TopBar loggedIn={connected} user={user}/>
+			<TopBar manageSearch={handleSearchUser} loggedIn={connected} user={user}/>
 			<MainBox sx={{height: '87vh'}}>
 				<MainContent user={user} loggedIn={connected}/>
 			</MainBox>
