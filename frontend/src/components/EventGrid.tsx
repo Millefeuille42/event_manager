@@ -42,7 +42,8 @@ const EventSpawner = (props:spawnerProps) => {
 		 					const date = new Date(event.begin_at)
 		 					const day = date.getDate().toString()
 		 					const month = date.toLocaleString('default', {month: 'long'})
-		 					let newEvent: eventParsed = {...event, day: day, month: month}
+		 					const year = date.getFullYear().toString()
+		 					let newEvent: eventParsed = {...event, day: day, month: month, year: year}
 		 					return (
 		 						<EventCard
 		 							key={index}

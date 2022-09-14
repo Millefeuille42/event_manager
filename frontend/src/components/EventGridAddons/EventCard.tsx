@@ -44,7 +44,7 @@ const EventCard = (props:props) => {
 					{props.event.day}
 				</Typography>
 				<Typography component='div' variant='subtitle1' color="text.secondary">
-					{props.event.month}
+					{props.event.month + " " + props.event.year}
 				</Typography>
 			</Box>
 		</Card>

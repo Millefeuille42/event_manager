@@ -18,4 +18,5 @@ export interface eventData {
 export interface eventParsed extends eventData {
 	day: string
 	month: string
+	year: string
 }
