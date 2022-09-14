@@ -13,7 +13,7 @@ interface props {
 }
 
 const MainContent = (props: props) => {
-	const [showExam, setShowExam] = useState(true)
+	const [showExam, setShowExam] = useState(false)
 	const [showSub, setShowSub] = useState(false)
 	const [filter, setFilter] = useState<string | null>(null)
 	const [events, setEvents] = useState([] as eventData[])

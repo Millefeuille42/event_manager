@@ -20,7 +20,7 @@ interface props {
 }
 
 const FilterBar = (props:props) => {
-	const [showExam, setShowExam] = useState(true)
+	const [showExam, setShowExam] = useState(false)
 	const [filter, setFilter] = useState<string | null>(null)
 	const [showSub, setShowSub] = useState(false)
 
