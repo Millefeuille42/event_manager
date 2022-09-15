@@ -8,3 +8,13 @@ class EventData:
             'location': data['location'],
             "kind": data['kind']
         }
+
+
+class EventUsersData:
+    def __init__(self, data):
+        url_len = len(data['user']['new_image_url'])
+        url = data['user']['new_image_url'][:url_len - 5]
+        self.data = {
+            'login': data['user']['login'],
+            'url': url
+        }

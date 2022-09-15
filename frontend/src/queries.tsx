@@ -1,7 +1,7 @@
 // Created by millefeuille on 12-Sep-22
 
 import axios from "axios";
-import {eventData, userData} from "./queriesData";
+import {eventData, eventSub, userData} from "./queriesData";
 
 export async function getAuthLink(): Promise<string> {
 	return await axios({
@@ -53,6 +53,18 @@ export async function getSubEvents(login: string, token: string): Promise<eventD
 	return await axios({
 		method: 'get',
 		url: process.env.REACT_APP_BACK_URL + "/events/user/" + login,
+		headers: {Authorization: "Bearer " + token}
+	}).then((response) => {
+		return response.data
+	}).catch((e) => {
+		throw e
+	})
+}
+
+export async function getEventData(id: string, token: string): Promise<eventSub[]> {
+	return await axios({
+		method: 'get',
+		url: process.env.REACT_APP_BACK_URL + "/events/id/" + id,
 		headers: {Authorization: "Bearer " + token}
 	}).then((response) => {
 		return response.data
