@@ -1,5 +1,7 @@
-import {Box, Card, CardContent, Typography} from "@mui/material";
+import {Box, Button, Card, CardContent, Typography} from "@mui/material";
 import {eventParsed} from "../../queriesData";
+import EventCardDialog from "./EventCardDialog";
+import {useState} from "react";
 
 const cardStyle = {
 	display: 'flex',
@@ -17,6 +19,16 @@ interface props {
 }
 
 const EventCard = (props:props) => {
+	const [openDialog, setOpenDialog] = useState(false)
+
+	const handleMore = () => {
+		setOpenDialog(true)
+	}
+
+	const handleClose = () => {
+		setOpenDialog(false)
+	}
+
 	return (
 		<Card sx={cardStyle} elevation={6}>
 			<Box sx={{ width: '70%', display: 'flex', flexDirection: 'column' }}>
@@ -29,9 +41,12 @@ const EventCard = (props:props) => {
 					</Typography>
 				</CardContent>
 				<Box sx={{display: 'flex', alignItems: 'center', pl: 2, pb: 1}}>
-					<Typography width={'100%'} noWrap component='div' variant='overline'>
+					<Typography width={'60%'} noWrap component='div' variant='overline'>
 						{props.event.location}
 					</Typography>
+					<Button onClick={handleMore}>
+						More
+					</Button>
 				</Box>
 			</Box>
 			<Box sx={{
@@ -44,9 +59,13 @@ const EventCard = (props:props) => {
 					{props.event.day}
 				</Typography>
 				<Typography component='div' variant='subtitle1' color="text.secondary">
-					{props.event.month + " " + props.event.year}
+					{props.event.month}
+				</Typography>
+				<Typography component='div' variant='subtitle1' color="text.secondary">
+					{props.event.year}
 				</Typography>
 			</Box>
+			<EventCardDialog open={openDialog} event={props.event} onClose={handleClose}/>
 		</Card>
 	)
 }
