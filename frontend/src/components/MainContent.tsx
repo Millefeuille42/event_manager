@@ -111,9 +111,6 @@ const MainContent = (props: props) => {
 			{ props.loggedIn ? (
 				<MainBox sx={{flexDirection: 'column', justifyContent: "flex-start",  alignItems: 'center', height: "100%"}}>
 					<FilterBar onChange={onChange}/>
-					{showExam && (
-						<ExamBar/>
-					)}
 					<EventGrid loaded={loaded} events={events} filter={filter} exam={showExam} sub={showSub} />
 				</MainBox>
 			) : (

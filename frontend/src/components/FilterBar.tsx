@@ -10,7 +10,7 @@ const boxStyle = {
 	width: '50%',
 	display: 'flex',
 	flexDirection: 'row',
-	justifyContent: 'space-around',
+	justifyContent: 'center',
 	height: "8%",
 	mb: 2,
 }
@@ -49,16 +49,7 @@ const FilterBar = (props:props) => {
 
 	return (
 		<Box sx={boxStyle}>
-			<Box>
-				<ToggleButton
-					value="exam"
-					selected={showExam}
-					onChange={handleExam}
-				>
-					<SchoolIcon/>
-				</ToggleButton>
-			</Box>
-			<Box>
+			<Box sx={{mr: 2}}>
 				<ToggleButton
 					value="sub"
 					selected={showSub}
@@ -67,21 +58,23 @@ const FilterBar = (props:props) => {
 					<ThreePIcon/>
 				</ToggleButton>
 			</Box>
-			<Box visibility={showSub ? 'visible' : 'hidden'}>
-				<ToggleButtonGroup
-					value={filter}
-					exclusive
-					onChange={handleFilter}
-					aria-label="filter"
-				>
-					<ToggleButton value="now" aria-label="now">
-						<TodayIcon/>
-					</ToggleButton>
-					<ToggleButton value="later" aria-label="later">
-						<UpdateIcon/>
-					</ToggleButton>
-				</ToggleButtonGroup>
-			</Box>
+			{showSub && (
+				<Box visibility={showSub ? 'visible' : 'hidden'}>
+					<ToggleButtonGroup
+						value={filter}
+						exclusive
+						onChange={handleFilter}
+						aria-label="filter"
+					>
+						<ToggleButton value="now" aria-label="now">
+							<TodayIcon/>
+						</ToggleButton>
+						<ToggleButton value="later" aria-label="later">
+							<UpdateIcon/>
+						</ToggleButton>
+					</ToggleButtonGroup>
+				</Box>
+			)}
 		</Box>
 	)
 }
