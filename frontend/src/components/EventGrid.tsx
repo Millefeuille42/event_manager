@@ -72,7 +72,7 @@ const EventGrid = (props:props) => {
 	const getFilteredList = () => {
 		if (props.events === null)
 			return []
-		let eventList: eventData[] = props.events
+		let eventList: eventData[] /* = props.events */
 		eventList = props.events.filter((event: eventData) => {
 			return new Date(event.begin_at) >= new Date()
 		})
