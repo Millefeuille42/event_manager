@@ -5,15 +5,30 @@ import {SearchIconWrapper} from "../../styledComponents/TopBarSearch/SearchIconW
 import {StyledInputBase} from "../../styledComponents/TopBarSearch/StyledInputBase";
 import {Search} from "../../styledComponents/TopBarSearch/Search";
 import {ChangeEvent, FormEvent, useState} from "react";
-import {getUser} from "../../queries";
-import {userData} from "../../queriesData";
-import {IconButton} from "@mui/material";
+import {getUser} from "../../actions/queries";
+import {userData} from "../../actions/queriesData";
+import {AlertColor, IconButton} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import {grey} from "@mui/material/colors";
+import StatusSnack, {snackProps} from "../StatusSnack";
+import resetSession from "../../actions/resetSession";
 
 const TopBarSearch = (props:{manageSearch: Function}) => {
 	const [input, setInput] = useState("")
 	const [searched, setSearched] = useState(false)
+	const [snack, setSnack] = useState({} as snackProps)
+
+	const showSnack = (message: string, severity: AlertColor = "error") => {
+		setSnack({
+			open: true,
+			message: message,
+			severity: severity
+		} as snackProps)
+	}
+
+	const hideSnack = () => {
+		setSnack({severity: snack.severity, message: snack.message} as snackProps)
+	}
 
 	const handleClick = () => {
 		props.manageSearch(null, true)
@@ -36,11 +51,21 @@ const TopBarSearch = (props:{manageSearch: Function}) => {
 			props.manageSearch(user, false)
 			setSearched(true)
 		}).catch((e) => {
-			if (e.response && e.response.status == 404) {
-				alert("User not found")
-			} else {
-				alert("Unknown error occurred")
+			if (e.response !== undefined) {
+				if (e.response.status === 401) {
+					showSnack("Your session expired")
+					resetSession(2000)
+					return
+				}
+				if (e.response.status === 429) {
+					return
+				}
+				if (e.response && e.response.status == 404) {
+					showSnack("User not found")
+					return
+				}
 			}
+			showSnack("An unknown error occurred")
 		})
 	}
 
@@ -61,6 +86,7 @@ const TopBarSearch = (props:{manageSearch: Function}) => {
 					<CloseIcon sx={{ color: grey[50] }}  />
 				</IconButton>
 			)}
+			<StatusSnack data={snack} onClose={hideSnack}/>
 		</Search>
 	)
 }

@@ -3,7 +3,7 @@
 import {AppBar, Box, Toolbar, Typography} from "@mui/material";
 import TopBarSearch from "./TopBarAddons/TopBarSearch";
 import TopBarAccountMenu from "./TopBarAddons/TopBarAccountMenu";
-import {userData} from "../queriesData";
+import {userData} from "../actions/queriesData";
 
 interface props {
 	loggedIn: boolean

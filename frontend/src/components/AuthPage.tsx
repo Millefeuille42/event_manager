@@ -1,5 +1,7 @@
-import {Button, Card, CardActions, CardContent, Typography} from "@mui/material";
-import {getAuthLink} from "../queries";
+import {AlertColor, Button, Card, CardActions, CardContent, Typography} from "@mui/material";
+import {getAuthLink} from "../actions/queries";
+import {useState} from "react";
+import StatusSnack, {snackProps} from "./StatusSnack";
 
 const cardStyle = {
 	height: "150px",
@@ -9,11 +11,25 @@ const cardStyle = {
 }
 
 const AuthPage = () => {
+	const [snack, setSnack] = useState({} as snackProps)
+
+	const showSnack = (message: string, severity: AlertColor = "error") => {
+		setSnack({
+			open: true,
+			message: message,
+			severity: severity
+		} as snackProps)
+	}
+
+	const hideSnack = () => {
+		setSnack({severity: snack.severity, message: snack.message} as snackProps)
+	}
+
 	const handleClick = async () => {
 		await getAuthLink().then((link: string) => {
 			window.location.href = link
-		}).catch((e) => {
-			console.log(e)
+		}).catch(() => {
+			showSnack("Main server seems down")
 		})
 	}
 
@@ -30,6 +46,7 @@ const AuthPage = () => {
 			<CardActions>
 				<Button onClick={handleClick}> Log in with 42 </Button>
 			</CardActions>
+			<StatusSnack data={snack} onClose={hideSnack}/>
 		</Card>
 	)
 }

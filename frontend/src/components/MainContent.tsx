@@ -4,8 +4,11 @@ import ExamBar from "./ExamBar";
 import EventGrid from "./EventGrid";
 import FilterBar from "./FilterBar";
 import {useEffect, useState} from "react";
-import {getAllEvents, getSubEvents} from "../queries";
-import {eventData, userData} from "../queriesData";
+import {getAllEvents, getSubEvents} from "../actions/queries";
+import {eventData, userData} from "../actions/queriesData";
+import StatusSnack, {snackProps} from "./StatusSnack";
+import {AlertColor} from "@mui/material";
+import resetSession from "../actions/resetSession";
 
 interface props {
 	loggedIn: boolean
@@ -18,6 +21,19 @@ const MainContent = (props: props) => {
 	const [filter, setFilter] = useState<string | null>(null)
 	const [events, setEvents] = useState([] as eventData[])
 	const [loaded, setLoaded] = useState(false)
+	const [snack, setSnack] = useState({} as snackProps)
+
+	const showSnack = (message: string, severity: AlertColor = "error") => {
+		setSnack({
+			open: true,
+			message: message,
+			severity: severity
+		} as snackProps)
+	}
+
+	const hideSnack = () => {
+		setSnack({severity: snack.severity, message: snack.message} as snackProps)
+	}
 
 	const onChange = (exam: boolean, newFilter: string | null, sub: boolean) => {
 		if (exam != showExam)
@@ -39,7 +55,17 @@ const MainContent = (props: props) => {
 			setEvents(events.reverse())
 			setLoaded(true)
 		}).catch((e) => {
-			console.log(e)
+			if (e.response !== undefined) {
+				if (e.response.status === 401) {
+					showSnack("Your session expired")
+					resetSession(2000)
+					return
+				}
+				if (e.response.status === 429) {
+					return
+				}
+			}
+			showSnack("An unknown error occurred")
 		})
 	}
 
@@ -51,7 +77,17 @@ const MainContent = (props: props) => {
 			setEvents(events.reverse())
 			setLoaded(true)
 		}).catch((e) => {
-			console.log(e)
+			if (e.response !== undefined) {
+				if (e.response.status === 401) {
+					showSnack("Your session expired")
+					resetSession(2000)
+					return
+				}
+				if (e.response.status === 429) {
+					return
+				}
+			}
+			showSnack("An unknown error occurred")
 		})
 	}
 
@@ -83,6 +119,7 @@ const MainContent = (props: props) => {
 			) : (
 				<AuthPage/>
 			)}
+			<StatusSnack data={snack} onClose={hideSnack}/>
 		</MainBox>
 	)
 }

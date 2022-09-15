@@ -1,14 +1,17 @@
 import {
-	Box, Button, CircularProgress,
+	AlertColor,
+	Box, Button,
 	Dialog, DialogActions,
 	DialogContent,
 	DialogContentText,
 	DialogTitle, LinearProgress, Link,
 	Typography
 } from "@mui/material";
-import {eventParsed, eventSub} from "../../queriesData";
+import {eventParsed, eventSub} from "../../actions/queriesData";
 import {useState} from "react";
-import {getEventData} from "../../queries";
+import {getEventData} from "../../actions/queries";
+import StatusSnack, {snackProps} from "../StatusSnack";
+import resetSession from "../../actions/resetSession";
 
 interface props {
 	open: boolean
@@ -57,6 +60,19 @@ const EventCardDialog = (props:props) => {
 	const [showSubs, setShowSubs] = useState(false)
 	const [subs, setSubs] = useState([] as eventSub[])
 	const [loaded, setLoaded] = useState(false)
+	const [snack, setSnack] = useState({} as snackProps)
+
+	const showSnack = (message: string, severity: AlertColor = "error") => {
+		setSnack({
+			open: true,
+			message: message,
+			severity: severity
+		} as snackProps)
+	}
+
+	const hideSnack = () => {
+		setSnack({severity: snack.severity, message: snack.message} as snackProps)
+	}
 
 	const handleClose = () => {
 		setSubs([])
@@ -79,7 +95,17 @@ const EventCardDialog = (props:props) => {
 			setSubs(subs)
 			setLoaded(true)
 		}).catch((e) => {
-			console.log(e)
+			if (e.response !== undefined) {
+				if (e.response.status === 401) {
+					showSnack("Your session expired")
+					resetSession(2000)
+					return
+				}
+				if (e.response.status === 429) {
+					return
+				}
+			}
+			showSnack("An unknown error occurred")
 		})
 	}
 
@@ -120,6 +146,7 @@ const EventCardDialog = (props:props) => {
 					)}
 				</Button>
 			</DialogActions>
+			<StatusSnack data={snack} onClose={hideSnack}/>
 		</Dialog>
 	)
 }

@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import './sheets/App.css';
 import TopBar from "./components/TopBar";
-import {Box, createTheme, CssBaseline, ThemeProvider} from "@mui/material";
-import {getAuthToken, getUser} from "./queries";
+import {AlertColor, createTheme, CssBaseline, ThemeProvider} from "@mui/material";
+import {getAuthToken, getUser} from "./actions/queries";
 import MainContent from "./components/MainContent";
 import MainBox from "./styledComponents/MainBox";
-import {userData} from "./queriesData";
+import {userData} from "./actions/queriesData";
+import StatusSnack, {snackProps} from "./components/StatusSnack";
+import resetSession from "./actions/resetSession";
 
 const darkTheme = createTheme({
 	palette: {
@@ -17,6 +19,19 @@ const darkTheme = createTheme({
 function App() {
 	const [connected, setConnected] = useState(false)
 	const [user, setUser] = useState<userData | null>(null)
+	const [snack, setSnack] = useState({} as snackProps)
+
+	const showSnack = (message: string, severity: AlertColor = "error") => {
+		setSnack({
+			open: true,
+			message: message,
+			severity: severity
+		} as snackProps)
+	}
+
+	const hideSnack = () => {
+		setSnack({severity: snack.severity, message: snack.message} as snackProps)
+	}
 
 	const checkQueryForAuth = () => {
 		const params = (new URL(window.location.toString())).searchParams
@@ -30,7 +45,17 @@ function App() {
 				window.sessionStorage.setItem("Session", rToken)
 				getUserData()
 			}).catch((e) => {
-				console.log(e)
+				if (e.response !== undefined) {
+					if (e.response.status === 401) {
+						showSnack("Your session expired")
+						resetSession(2000)
+						return
+					}
+					if (e.response.status === 429) {
+						return
+					}
+				}
+				showSnack("An unknown error occurred")
 			})
 		}
 	}
@@ -42,7 +67,17 @@ function App() {
 		getUser('me', token).then((user: userData) => {
 			setUser(user)
 		}).catch((e) => {
-			console.log(e)
+			if (e.response !== undefined) {
+				if (e.response.status === 401) {
+					showSnack("Your session expired")
+					resetSession(2000)
+					return
+				}
+				if (e.response.status === 429) {
+					return
+				}
+			}
+			showSnack("An unknown error occurred")
 		})
 	}
 
@@ -56,7 +91,17 @@ function App() {
 				console.log("gett")
 				setUser(user)
 			}).catch((e) => {
-				console.log(e)
+				if (e.response !== undefined) {
+					if (e.response.status === 401) {
+						showSnack("Your session expired")
+						resetSession(2000)
+						return
+					}
+					if (e.response.status === 429) {
+						return
+					}
+				}
+				showSnack("An unknown error occurred")
 			})
 			return
 		}
@@ -81,6 +126,7 @@ function App() {
 			<TopBar manageSearch={handleSearchUser} loggedIn={connected} user={user}/>
 			<MainBox sx={{height: '87vh'}}>
 				<MainContent user={user} loggedIn={connected}/>
+				<StatusSnack data={snack} onClose={hideSnack}/>
 			</MainBox>
 		</ThemeProvider>
 	);
