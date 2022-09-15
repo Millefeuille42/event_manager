@@ -20,3 +20,8 @@ export interface eventParsed extends eventData {
 	month: string
 	year: string
 }
+
+export interface eventSub {
+	login: string
+	url: string
+}
