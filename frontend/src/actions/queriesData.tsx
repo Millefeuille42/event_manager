@@ -19,6 +19,8 @@ export interface eventParsed extends eventData {
 	day: string
 	month: string
 	year: string
+	hour: string
+	minutes: string
 }
 
 export interface eventSub {
