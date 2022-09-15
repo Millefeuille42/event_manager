@@ -44,13 +44,17 @@ const TopBarSearch = (props:{manageSearch: Function}) => {
 
 	const handleSearch = (e: FormEvent) => {
 		e.preventDefault()
+		const field = document.getElementById('search') as HTMLInputElement;
+		field.blur()
 		let token = window.sessionStorage.getItem("Session")
 		if (token === null)
 			return
 		getUser(input, token).then((user: userData) => {
 			props.manageSearch(user, false)
 			setSearched(true)
+			setInput("")
 		}).catch((e) => {
+			setInput("")
 			if (e.response !== undefined) {
 				if (e.response.status === 401) {
 					showSnack("Your session expired")
