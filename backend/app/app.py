@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request
 from modules.events_module import events
 from modules.users_module import users
@@ -23,10 +22,11 @@ def after_request(response):
 
     return response
 
+
 # Import all routes blueprint from modules
 app.register_blueprint(events)
 app.register_blueprint(users)
 app.register_blueprint(auth)
 
 if __name__ == '__main__':
-    app.run(os.environ['back_host'], int(os.environ['back_port']), debug=True)
+    app.run(debug=True)
