@@ -1,5 +1,4 @@
-import {Box, Paper, ToggleButton, ToggleButtonGroup} from "@mui/material";
-import SchoolIcon from '@mui/icons-material/School';
+import {Box, ToggleButton, ToggleButtonGroup} from "@mui/material";
 import UpdateIcon from '@mui/icons-material/Update';
 import TodayIcon from '@mui/icons-material/Today';
 import ThreePIcon from '@mui/icons-material/ThreeP';
@@ -20,19 +19,20 @@ interface props {
 }
 
 const FilterBar = (props:props) => {
-	const [showExam, setShowExam] = useState(false)
+	//const [showExam, setShowExam] = useState(false)
 	const [filter, setFilter] = useState<string | null>(null)
 	const [showSub, setShowSub] = useState(false)
 
 	const handleFilter = (e: MouseEvent, newFilter: string | null) => {
-		props.onChange(showExam, newFilter, showSub)
+	//	props.onChange(showExam, newFilter, showSub)
+		props.onChange(newFilter, showSub)
     	setFilter(newFilter);
 	}
 
-	const handleExam = () => {
-		props.onChange(!showExam, filter, showSub)
-		setShowExam(!showExam)
-	}
+	// const handleExam = () => {
+	// 	props.onChange(!showExam, filter, showSub)
+	// 	setShowExam(!showExam)
+	// }
 
 	const handleSub = () => {
 		let newFilter = filter
@@ -40,7 +40,8 @@ const FilterBar = (props:props) => {
 			newFilter = null
 			setFilter(null)
 		}
-		props.onChange(showExam, newFilter, !showSub)
+	//	props.onChange(showExam, newFilter, !showSub)
+		props.onChange(newFilter, showSub)
 		setShowSub(!showSub)
 	}
 

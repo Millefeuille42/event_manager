@@ -1,6 +1,5 @@
 import AuthPage from "./AuthPage";
 import MainBox from "../styledComponents/MainBox";
-import ExamBar from "./ExamBar";
 import EventGrid from "./EventGrid";
 import FilterBar from "./FilterBar";
 import {useEffect, useState} from "react";
@@ -36,11 +35,11 @@ const MainContent = (props: props) => {
 	}
 
 	const onChange = (exam: boolean, newFilter: string | null, sub: boolean) => {
-		if (exam != showExam)
+		if (exam !== showExam)
 			setShowExam(exam)
-		if (newFilter != filter)
+		if (newFilter !== filter)
 			setFilter(newFilter)
-		if (sub != showSub) {
+		if (sub !== showSub) {
 			setEvents([])
 			setShowSub(sub)
 			setLoaded(false)

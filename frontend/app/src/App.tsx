@@ -88,7 +88,6 @@ function App() {
 			if (token === null)
 				return
 			getUser('me', token).then((user: userData) => {
-				console.log("gett")
 				setUser(user)
 			}).catch((e) => {
 				if (e.response !== undefined) {
@@ -118,6 +117,7 @@ function App() {
 		setConnected(true)
 		if (user === null)
 			getUserData()
+		// eslint-disable-next-line
 	}, [])
 
 	return (

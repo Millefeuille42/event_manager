@@ -1,6 +1,6 @@
-import {alpha, Box, styled} from "@mui/material";
+import {Box, styled} from "@mui/material";
 
-const MainBox = styled(Box)(({ theme }) => ({
+const MainBox = styled(Box)(() => ({
 	width: '100%',
 	display: 'flex',
 	flexDirection: 'row',
