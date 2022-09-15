@@ -1,8 +1,7 @@
 import MainBox from "../styledComponents/MainBox";
 import {Box, CircularProgress, Paper, Typography} from "@mui/material";
 import EventCard from "./EventGridAddons/EventCard";
-import {eventParsed, eventData} from "../queriesData";
-import {useState} from "react";
+import {eventParsed, eventData} from "../actions/queriesData";
 
 const paperStyle = {
 	width: '100%',
@@ -40,10 +39,13 @@ const EventSpawner = (props:spawnerProps) => {
 		 			{
 		 				props.list.map((event: eventData, index: number) => {
 		 					const date = new Date(event.begin_at)
-		 					const day = date.getDate().toString()
-		 					const month = date.toLocaleString('default', {month: 'long'})
-		 					const year = date.getFullYear().toString()
-		 					let newEvent: eventParsed = {...event, day: day, month: month, year: year}
+		 					let newEvent: eventParsed = {...event,
+								day: date.getDate().toString(),
+								month: date.toLocaleString('default', {month: 'long'}),
+								year: date.getFullYear().toString(),
+							 	hour: date.getHours().toString(),
+								minutes: date.getMinutes().toString()
+							 }
 		 					return (
 		 						<EventCard
 		 							key={index}

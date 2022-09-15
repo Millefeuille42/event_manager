@@ -1,8 +1,8 @@
 import {Box, Button, Card, CardContent, Typography} from "@mui/material";
-import {eventParsed} from "../../queriesData";
+import {eventParsed} from "../../actions/queriesData";
 import EventCardDialog from "./EventCardDialog";
 import {useState} from "react";
-
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 const cardStyle = {
 	display: 'flex',
 	flexDirection: 'row',
@@ -41,9 +41,12 @@ const EventCard = (props:props) => {
 					</Typography>
 				</CardContent>
 				<Box sx={{display: 'flex', alignItems: 'center', pl: 2, pb: 1}}>
-					<Typography width={'60%'} noWrap component='div' variant='overline'>
-						{props.event.location}
-					</Typography>
+					<Box sx={{mr: 2, display: 'flex', justifyItems: 'start'}}>
+						<AccessAlarmIcon sx={{mr: 0.5}} fontSize={"small"}/>
+						<Typography width={'80%'} noWrap component='div' variant='button'>
+							{`${props.event.hour}h${props.event.minutes.padEnd(2, '0')}`}
+						</Typography>
+					</Box>
 					<Button onClick={handleMore}>
 						More
 					</Button>
