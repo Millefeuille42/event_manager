@@ -64,7 +64,7 @@ const TopBarSearch = (props:{manageSearch: Function}) => {
 				if (e.response.status === 429) {
 					return
 				}
-				if (e.response && e.response.status == 404) {
+				if (e.response && e.response.status === 404) {
 					showSnack("User not found")
 					return
 				}
