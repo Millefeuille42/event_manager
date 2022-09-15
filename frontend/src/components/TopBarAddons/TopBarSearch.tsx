@@ -7,15 +7,18 @@ import {Search} from "../../styledComponents/TopBarSearch/Search";
 import {ChangeEvent, FormEvent, useState} from "react";
 import {getUser} from "../../queries";
 import {userData} from "../../queriesData";
-import {Button} from "@mui/material";
+import {IconButton} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
+import {grey} from "@mui/material/colors";
 
 const TopBarSearch = (props:{manageSearch: Function}) => {
 	const [input, setInput] = useState("")
+	const [searched, setSearched] = useState(false)
 
 	const handleClick = () => {
 		props.manageSearch(null, true)
 		setInput("")
+		setSearched(false)
 	}
 
 	const handleChange = (e: ChangeEvent) => {
@@ -31,6 +34,7 @@ const TopBarSearch = (props:{manageSearch: Function}) => {
 			return
 		getUser(input, token).then((user: userData) => {
 			props.manageSearch(user, false)
+			setSearched(true)
 		}).catch((e) => {
 			if (e.response && e.response.status == 404) {
 				alert("User not found")
@@ -52,9 +56,11 @@ const TopBarSearch = (props:{manageSearch: Function}) => {
 				inputProps={{ 'aria-label': 'search' }}
 				value={input}
 			/>
-			<Button onClick={handleClick}>
-				<CloseIcon/>
-			</Button>
+			{searched && (
+				<IconButton onClick={handleClick}>
+					<CloseIcon sx={{ color: grey[50] }}  />
+				</IconButton>
+			)}
 		</Search>
 	)
 }
