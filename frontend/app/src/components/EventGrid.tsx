@@ -55,7 +55,7 @@ const EventSpawner = (props:spawnerProps) => {
 		 			}
 		 		</Box>
 			) : (
-				<Typography component={"div"} variant={"h3"}>No events to display
+				<Typography align={'center'} component={"div"} variant={"h3"}>No events to display
 				</Typography>
 			)}
 		</Paper>
@@ -63,7 +63,7 @@ const EventSpawner = (props:spawnerProps) => {
 }
 
 interface props {
-	exam: boolean
+	//exam: boolean
 	sub: boolean
 	filter: string | null
 	events: eventData[] | null
@@ -98,7 +98,7 @@ const EventGrid = (props:props) => {
 
 	return (
 		<MainBox sx={{
-				height: props.exam ? "68%" : '90%',
+				height: /*props.exam ? "68%" : */'90%',
 				width: '95%',
 			}}
 		>

@@ -13,4 +13,8 @@ export const Search = styled('form')(({ theme }) => ({
 		marginLeft: theme.spacing(1),
 		width: 'auto',
 	},
+	[theme.breakpoints.up('xs')]: {
+		marginLeft: theme.spacing(1),
+		width: 'auto',
+	},
 }));

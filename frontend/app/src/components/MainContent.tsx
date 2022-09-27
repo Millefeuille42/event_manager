@@ -15,7 +15,7 @@ interface props {
 }
 
 const MainContent = (props: props) => {
-	const [showExam, setShowExam] = useState(false)
+	//const [showExam, setShowExam] = useState(false)
 	const [showSub, setShowSub] = useState(false)
 	const [filter, setFilter] = useState<string | null>(null)
 	const [events, setEvents] = useState([] as eventData[])
@@ -34,9 +34,9 @@ const MainContent = (props: props) => {
 		setSnack({severity: snack.severity, message: snack.message} as snackProps)
 	}
 
-	const onChange = (exam: boolean, newFilter: string | null, sub: boolean) => {
-		if (exam !== showExam)
-			setShowExam(exam)
+	const onChange = (/*exam: boolean, */newFilter: string | null, sub: boolean) => {
+		//if (exam !== showExam)
+		//	setShowExam(exam)
 		if (newFilter !== filter)
 			setFilter(newFilter)
 		if (sub !== showSub) {
@@ -110,7 +110,7 @@ const MainContent = (props: props) => {
 			{ props.loggedIn ? (
 				<MainBox sx={{flexDirection: 'column', justifyContent: "flex-start",  alignItems: 'center', height: "100%"}}>
 					<FilterBar onChange={onChange}/>
-					<EventGrid loaded={loaded} events={events} filter={filter} exam={showExam} sub={showSub} />
+					<EventGrid loaded={loaded} events={events} filter={filter} /*exam={showExam}*/ sub={showSub} />
 				</MainBox>
 			) : (
 				<AuthPage/>

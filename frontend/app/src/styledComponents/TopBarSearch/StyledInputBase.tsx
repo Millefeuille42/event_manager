@@ -14,5 +14,8 @@ export const StyledInputBase = styled(InputBase)(({ theme }) => ({
 				width: '20ch',
 			},
 		},
+		[theme.breakpoints.up('xs')]: {
+			width: '10ch',
+		},
 	},
 }));

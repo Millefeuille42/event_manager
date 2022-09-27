@@ -30,7 +30,7 @@ const TopBar = (props:props) => {
 						variant={"button"}
 						noWrap
 						component={"div"}
-						sx={{ flexGrow: 1, display: {xs: 'none', sm: 'block'} }}
+						sx={{ flexGrow: 1, display: {xs: 'block', sm: 'block'} }}
 					>
 						{props.user.login}
 					</Typography>

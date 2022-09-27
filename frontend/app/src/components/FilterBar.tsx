@@ -41,7 +41,7 @@ const FilterBar = (props:props) => {
 			setFilter(null)
 		}
 	//	props.onChange(showExam, newFilter, !showSub)
-		props.onChange(newFilter, showSub)
+		props.onChange(newFilter, !showSub)
 		setShowSub(!showSub)
 	}
 
