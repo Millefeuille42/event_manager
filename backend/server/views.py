@@ -13,7 +13,7 @@ def after_request(response):
     header['Access-Control-Allow-Origin'] = '*'
     header['Access-Control-Allow-Methods'] = "GET, OPTIONS"
     header['Access-Control-Allow-Headers'] = 'authorization'
-    app.logger.error(request.path)
+    app.logger.error(request.path + " - " + response.status)
     return response
 
 
