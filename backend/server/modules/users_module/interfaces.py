@@ -2,7 +2,6 @@ class UserData:
     def __init__(self, data):
         campus = 0
         if 'campus' in data and len(data['campus']) > 0:
-            print(data['campus'][0])
             campus = data['campus'][0]['id']
 
         self.data = {

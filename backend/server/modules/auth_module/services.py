@@ -16,6 +16,8 @@ def construct_auth_uri():
 
 
 def validate_token(session):
+    if session is None:
+        return {'text': "Invalid session", 'code': 401}
     try:
         if redis_client.exists(session) <= 0:
             return {'text': "Invalid session", 'code': 401}
@@ -34,6 +36,8 @@ def validate_token(session):
 
 # Get authenticated token from 42
 def auth_user(code, state):
+    if state is None:
+        return {'text': "Invalid session", 'code': 401}
     if redis_client.exists(state) <= 0:     # Check state against the ones registered in memory
         return "State not found", 422       # If it is not found, the request is erroneous
     session = redis_client.get(state)

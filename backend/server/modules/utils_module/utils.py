@@ -2,7 +2,6 @@ from . import *
 
 
 def do_authenticated_request(url, token):
-    print("Requesting: " + url)
     try:
         response = requests.get(url, headers={'Authorization': 'Bearer ' + token})
         if response.status_code != 200:

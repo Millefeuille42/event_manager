@@ -3,7 +3,6 @@ from __init__ import app, request, events, users, auth
 
 @app.before_request
 def before_request():
-    print("Test")
     if request.method == "OPTIONS":
         return "OK", 200
 
@@ -14,7 +13,7 @@ def after_request(response):
     header['Access-Control-Allow-Origin'] = '*'
     header['Access-Control-Allow-Methods'] = "GET, OPTIONS"
     header['Access-Control-Allow-Headers'] = 'authorization'
-
+    app.logger.error(request.path)
     return response
 
 
