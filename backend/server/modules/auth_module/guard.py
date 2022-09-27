@@ -10,6 +10,6 @@ def login_required(f):
             return "Unauthorized", 401
         token_resp = services.validate_token(token)  # Check validity of token
         if token_resp['code'] != 200:
-            return "Unauthorized", 401  # If anything goes wrong, deny the request
+            return token_resp['text'], 401  # If anything goes wrong, deny the request
         return f(*args, **kwargs)       # Else continue request
     return decorated_function
