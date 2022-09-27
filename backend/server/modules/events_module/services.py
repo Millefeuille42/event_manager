@@ -1,7 +1,4 @@
-import os
-from flask import g
-from . import interfaces
-from app.utils import do_authenticated_request
+from modules.events_module import os, do_authenticated_request, interfaces, g
 
 
 def get_events_per_campus(campus_id):

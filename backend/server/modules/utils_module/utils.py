@@ -1,4 +1,4 @@
-import requests
+from . import *
 
 
 def do_authenticated_request(url, token):

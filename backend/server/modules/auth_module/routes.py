@@ -1,5 +1,4 @@
-from flask import request
-from . import auth, services
+from modules.auth_module import auth, services, request
 
 
 # Get the 42 Oauth link

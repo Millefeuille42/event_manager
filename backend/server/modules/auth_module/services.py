@@ -1,8 +1,5 @@
-import os
-import uuid
-import requests
-from cryptography.fernet import Fernet
-from flask import g
+from modules.auth_module import Fernet, uuid, os, requests, g
+
 
 key = Fernet.generate_key()
 fernet = Fernet(key)
@@ -32,9 +29,9 @@ def validate_token(token):
 
 # Get authenticated token from 42
 def auth_user(code, state):
-    if state not in states:         # Check state against the ones registered in memory
-        return "Not found", 404     # If it is not found, the request is erroneous
-    states.remove(state)
+    #if state not in states:         # Check state against the ones registered in memory
+    #    return "State not found", 422    # If it is not found, the request is erroneous
+    #states.remove(state)
 
     target = os.environ['api_url']
     target += "/oauth/token"
@@ -43,7 +40,7 @@ def auth_user(code, state):
     target += "&client_secret=" + os.environ['api_secret']
     target += "&code=" + code
     target += "&redirect_uri=" + os.environ['api_redirect']
-    target += "&state=" + state
+    target += "&state=lol"
 
     try:
         response = requests.post(target)    # Request token from 42
@@ -53,4 +50,3 @@ def auth_user(code, state):
         print(err)
         return "Error while authenticating", 520
     return fernet.encrypt(response.json()["access_token"].encode()), 200    # Return encrypted token
-

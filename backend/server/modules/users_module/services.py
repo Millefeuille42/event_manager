@@ -1,7 +1,4 @@
-import os
-from flask import g
-from . import interfaces
-from app.utils import do_authenticated_request
+from modules.users_module import os, do_authenticated_request, g, interfaces
 
 
 def get_user_data(user_id):

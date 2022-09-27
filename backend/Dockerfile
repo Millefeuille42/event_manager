@@ -1,11 +1,13 @@
 FROM python:alpine3.15
 
 WORKDIR /app
-COPY app/requirements.txt ./
+COPY server/requirements.txt ./
 RUN pip3 install -r requirements.txt
 RUN pip3 install waitress
-COPY app/. ./
+COPY server ./server
 
 EXPOSE 5000
 # NOT SUITABLE FOR PRODUCTION
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+
+CMD ["gunicorn", "--preload", "-w 4", "-b", "0.0.0.0:5000", "server:app"]
+#CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
