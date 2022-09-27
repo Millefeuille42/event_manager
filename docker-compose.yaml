@@ -41,3 +41,19 @@ services:
       - .env
     ports:
       - '3000:3000'
+  proxy:
+    pull_policy: never
+    restart: always
+    depends_on:
+      back:
+        condition: service_started
+      front:
+        condition: service_started
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: event_manager_proxy
+    env_file:
+      - .env
+    ports:
+      - ${proxy_port}:80
