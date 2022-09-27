@@ -53,6 +53,7 @@ const FilterBar = (props:props) => {
 			<Box sx={{mr: 2}}>
 				<ToggleButton
 					value="sub"
+					aria-label={"Show subscribed projects"}
 					selected={showSub}
 					onChange={handleSub}
 				>
@@ -67,10 +68,10 @@ const FilterBar = (props:props) => {
 						onChange={handleFilter}
 						aria-label="filter"
 					>
-						<ToggleButton value="now" aria-label="now">
+						<ToggleButton value="now" aria-label="Show events for today">
 							<TodayIcon/>
 						</ToggleButton>
-						<ToggleButton value="later" aria-label="later">
+						<ToggleButton value="later" aria-label="Show events for later">
 							<UpdateIcon/>
 						</ToggleButton>
 					</ToggleButtonGroup>

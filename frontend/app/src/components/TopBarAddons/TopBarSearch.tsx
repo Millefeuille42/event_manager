@@ -86,7 +86,7 @@ const TopBarSearch = (props:{manageSearch: Function}) => {
 				value={input}
 			/>
 			{searched && (
-				<IconButton onClick={handleClick}>
+				<IconButton onClick={handleClick} aria-label={"Close search"}>
 					<CloseIcon sx={{ color: grey[50] }}  />
 				</IconButton>
 			)}

@@ -15,6 +15,7 @@ const TopBarAccountMenu = () => {
 			size="large"
 			edge={"start"}
 			color={"inherit"}
+			aria-label={"Disconnect"}
 			sx={{ ml: 2 }}
 		>
 			<LogoutIcon/>
