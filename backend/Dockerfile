@@ -9,5 +9,7 @@ COPY server ./server
 EXPOSE 5000
 # NOT SUITABLE FOR PRODUCTION
 
+ENV PYTHONUNBUFFERED True
+
 CMD ["gunicorn", "--preload", "-w 4", "-b", "0.0.0.0:5000", "server:app"]
 #CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
