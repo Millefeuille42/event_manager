@@ -10,7 +10,6 @@ services:
     image: event_manager_redis
     ports:
       - ${ext_redis_port}:6379
-
   back:
     pull_policy: never
     build:
@@ -30,7 +29,7 @@ services:
       back:
         condition: service_started
     build:
-      context: frontend
+      context: ./frontend
       dockerfile: Dockerfile
       args:
         - REACT_APP_BACK_URL=${REACT_APP_BACK_URL}

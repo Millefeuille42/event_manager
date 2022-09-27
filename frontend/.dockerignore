@@ -1,0 +1,7 @@
+app/build
+app/node_modules
+app/.env
+
+build
+node_modules
+.env
