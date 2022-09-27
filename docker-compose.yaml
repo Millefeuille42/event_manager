@@ -2,6 +2,7 @@ version: '3.8'
 services:
   redis:
     pull_policy: never
+    restart: always
     build:
       context: ./redis
       dockerfile: Dockerfile
@@ -12,6 +13,7 @@ services:
       - ${ext_redis_port}:6379
   back:
     pull_policy: never
+    restart: always
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -25,6 +27,7 @@ services:
       - '5000:5000'
   front:
     pull_policy: never
+    restart: always
     depends_on:
       back:
         condition: service_started
