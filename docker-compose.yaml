@@ -1,11 +1,25 @@
 version: '3.8'
 services:
+  redis:
+    pull_policy: never
+    build:
+      context: ./redis
+      dockerfile: Dockerfile
+      args:
+        - REDIS_PASSWORD=${redis_password}
+    image: event_manager_redis
+    ports:
+      - ${ext_redis_port}:6379
+
   back:
     pull_policy: never
     build:
       context: ./backend
       dockerfile: Dockerfile
     image: event_manager_back
+    depends_on:
+      redis:
+        condition: service_started
     env_file:
       - .env
     ports:
