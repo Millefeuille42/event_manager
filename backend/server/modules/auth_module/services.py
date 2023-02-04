@@ -57,7 +57,7 @@ def auth_user(code, state):
         if response.status_code != 200:
             raise Exception(response.status_code, response.text)
     except Exception as err:
-        print(err)
+        print(err, flush=True)
         return "Error while authenticating", 520
 
     token = fernet.encrypt(response.json()["access_token"].encode())
